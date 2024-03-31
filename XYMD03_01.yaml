@@ -23,14 +23,14 @@ select:
       
 number:
   - platform: modbus_controller
-    modbus_controller_id: XYMD03_Address
+    modbus_controller_id: XYMD03_01
     name: "XYMD03 Address"
     address: 257 #0x0101 #Set Address Register
     value_type: U_WORD
     min_value: 1
     max_value: 247
   - platform: modbus_controller
-    modbus_controller_id: XYMD03_Address
+    modbus_controller_id: XYMD03_01
     name: "XYMD03 Temperature Verification"
     address: 259 #0x0101 #Set Address Register
     value_type: U_WORD
