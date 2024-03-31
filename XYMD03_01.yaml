@@ -1,0 +1,69 @@
+modbus_controller:
+  - id: XYMD03_01
+    address: 1
+    modbus_id: modbus1
+    update_interval: 5s
+    offline_skip_updates: 60
+
+  
+select:
+  - platform: modbus_controller
+    modbus_controller_id: XYMD03_Baud
+    name: "XYMD03 Baud Rate"
+    address: 258 #0x0102 #Set Address Register
+    value_type: U_WORD
+    optionsmap:
+      "9600": 9600
+      "14400": 14400
+      "19200": 19200
+      "38400": 38400
+      "56000": 56000
+      "115200": 11520 
+
+      
+number:
+  - platform: modbus_controller
+    modbus_controller_id: XYMD03_Address
+    name: "XYMD03 Address"
+    address: 257 #0x0101 #Set Address Register
+    value_type: U_WORD
+    min_value: 1
+    max_value: 247
+  - platform: modbus_controller
+    modbus_controller_id: XYMD03_Address
+    name: "XYMD03 Temperature Verification"
+    address: 259 #0x0101 #Set Address Register
+    value_type: U_WORD
+    min_value: -10.0
+    max_value: 10.0
+    multiply: 10
+    step: 0.1
+
+    
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: XYMD03_01
+    id: XYMD03_Temperature_01
+    name: 'XYMD03_Temperature_01'
+    address: 0x0001
+    register_type: holding
+    value_type: S_WORD 
+    accuracy_decimals: 1
+    device_class: temperature
+    unit_of_measurement: "°C"
+    filters:
+    - throttle_average: 15s
+    - multiply: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: XYMD03_01
+    id: XYMD03_Humidity_01
+    name: 'XYMD03_Humidity_01'
+    address: 0x0002
+    register_type: holding
+    value_type: S_WORD 
+    accuracy_decimals: 1
+    unit_of_measurement: "%"
+    device_class: humidity
+    filters:
+    - throttle_average: 15s
+    - multiply: 0.1
